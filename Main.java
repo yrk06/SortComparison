@@ -3,6 +3,9 @@ import java.util.Random;
 import Algoritmos.heapsort;
 import Algoritmos.MergeSort;
 import Algoritmos.shellsort;
+import Algoritmos.InsertionSort;
+import Algoritmos.SelectionSort;
+import Algoritmos.QuickSort;
 
 import java.util.*;
 
@@ -12,6 +15,9 @@ public class Main {
     public static void main(String[] kwargs){
 
         long[][] times = new long[][] {
+            {0,0,0},
+            {0,0,0},
+            {0,0,0},
             {0,0,0},
             {0,0,0},
             {0,0,0}
@@ -25,14 +31,15 @@ public class Main {
             }
         }
         System.out.println("Starting");
-        for(int p = 0; p<3;p++){
+        for(int p = 0; p<6;p++){
             int[][] arrays = new int[][] {
                 generateAlmostSorted(size),
                 generateRandom(size),
                 generateBackwards(size)
             };
 
-            MergeSort ob = new MergeSort();
+            MergeSort ms = new MergeSort();
+            InsertionSort is = new InsertionSort();
             
 
             for(int c = 0; c<3;c++){
@@ -45,13 +52,22 @@ public class Main {
                         shellsort.sort(arrays[c]);
                         break;
                     case 2:
-                        ob.sort(arrays[c], 0, arrays[c].length - 1);
+                        ms.sort(arrays[c], 0, arrays[c].length - 1);
+                        break;
+                    case 3:    
+                        is.sort(arrays[c]);
+                        break;
+                    case 4:    
+                        QuickSort.quickSort(arrays[c],0,arrays[c].length-1);
+                        break;
+                    case 5:    
+                        SelectionSort.sort(arrays[c]);
                         break;
                 }
                 times[p][c] = System.currentTimeMillis() - d0;
             }
         }
-        for(int p = 0; p<3;p++){
+        for(int p = 0; p<6;p++){
             for(int c = 0; c<3;c++){
                 System.out.printf("%d ",times[p][c]);
             }
